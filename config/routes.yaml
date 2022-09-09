@@ -1,0 +1,7 @@
+controllers:
+    resource: ../src/Controller/
+    type: attribute
+
+logout:
+    path: /deconnexion
+    methods: GET
