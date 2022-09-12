@@ -26,7 +26,7 @@
                                 <tr>
                                     <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">{{structure.email}}</td>
                                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ structure.address }}</td>
-                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><a href="{{ path('salle') }}">Détails</a></td>
+                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><a href="{{ path('salle' ,{'id' : structure.id}) }}">Détails</a></td>
 
                                     </td>
                                 </tr>
@@ -40,6 +40,9 @@
             </div>
         </div>
     </div>
+    <br>
+    <br>
+    <br>
 
 
     <div class="px-4 sm:px-6 lg:px-8">
@@ -53,7 +56,7 @@
 
                             <tr>
                                 <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">Options</th>
-                                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"></th>
+                                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Activé</th>
                                 <span class="sr-only">Edit</span>
                                 </th>
                             </tr>
@@ -65,11 +68,10 @@
                                     <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
                                         <!-- This example requires Tailwind CSS v2.0+ -->
                                         <!-- Enabled: "bg-indigo-600", Not Enabled: "bg-gray-200" -->
-                                        <button type="button" class="bg-gray-200 relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2" role="switch" aria-checked="false">
-                                            <span class="sr-only">Use setting</span>
-                                            <!-- Enabled: "translate-x-5", Not Enabled: "translate-x-0" -->
-                                            <span aria-hidden="true" class="translate-x-0 pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out"></span>
-                                        </button>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked>
+                                            <label class="form-check-label" for="flexSwitchCheckChecked"></label>
+                                        </div>
 
                                     </td>
                                     </td>
@@ -84,4 +86,7 @@
             </div>
         </div>
     </div>
+    <br>
+    <br>
+    <br>
 {% endblock %}
