@@ -1,11 +1,13 @@
 <?php
 
+
 namespace App\Controller;
 
 use App\Entity\Structure;
 
 use App\Entity\User;
 use Doctrine\Persistence\ManagerRegistry;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -14,8 +16,9 @@ class SalleController extends AbstractController
 {
 
 
-    #[Route('/salle/{id}', name: 'salle')]
-    public function index( user $user, $id ,ManagerRegistry $managerRegistry): Response
+    #[Route('/salle/{id}', name: 'salle' ,methods: ['GET'])]
+
+    public function index($id, ManagerRegistry $managerRegistry): Response
     {
          $fitness = $managerRegistry->getRepository(User::class)->findAll();
 
@@ -23,11 +26,12 @@ class SalleController extends AbstractController
 
 
 
-        $name = $this->getUser()->getName();
+
+         $name = $this->getUser()->getName();
 
         if($this->getUser()->getRoles() == ['ROLE_ADMIN'])
         {
-            $options =$user->getOption();
+            $options =(new \App\Entity\User)->getOption();
         }else{
             $options = $this->getUser()->getOption();
         }
@@ -45,3 +49,8 @@ class SalleController extends AbstractController
 
     }
 }
+
+
+
+
+
