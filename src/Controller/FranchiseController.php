@@ -18,13 +18,13 @@ class FranchiseController extends AbstractController
     {
         $fitness = $doctrine->getRepository(User::class)->findOneBy(array('name'=>$name));
 
-        $getName = $this->getUser()->getName();
-
-
+        $getUser = $this->getUser();
         $structures = $user->getStructures();
         $options = $user->getOption();
-        if($name != $getName){
-            return $this->redirectToRoute('administration', ['name' => $getName]);
+
+
+        if($getUser ->getRoles() != ['ROLE_ADMIN'] && $name != $getUser->getName()){
+            return $this->redirectToRoute('franchise', ['name' => $getUser->getName()]);
         }
 
         if (!$fitness) {

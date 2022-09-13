@@ -18,9 +18,13 @@ security:
             entity:
                 class: App\Entity\Structure
                 property: email
+        administrateur:
+            entity:
+                class: App\Entity\SquadAdmin
+                property: email
         all_users:
             chain:
-                providers: [ 'users', 'second_user' ]
+                providers: [ 'users', 'second_user','administrateur' ]
 
     firewalls:
         dev:
