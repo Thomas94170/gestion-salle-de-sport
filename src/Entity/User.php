@@ -47,6 +47,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'proprietaire', targetEntity: Structure::class, cascade: ['persist', 'remove'])]
     private Collection $structures;
 
+    public function __toString()
+    {
+        return $this->getName();
+    }
+
    // #[ORM\Column(type: 'boolean')]
     // private $isVerified = false;
 

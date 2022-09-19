@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block content %}
+    {% for flash_error in app.flashes('verify_email_error') %}
+        <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+    {% endfor %}
+
+
+
+    {{ form_start(registrationForm) }}
+    <div class="row bg-gray-50">
+        <div class="col-6">
+            <div scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6"></div>
+
+        </div>
+        <div class="col-6">
+            <div scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"></div>
+        </div>
+    </div>
+    <div class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
+        {{ form_row(registrationForm.proprietaire) }}
+    </div>
+    <div class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
+        {{ form_row(registrationForm.address) }}
+    </div>
+    <div class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
+        {{ form_row(registrationForm.email) }}
+    </div>
+    <div class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
+        {{ form_row(registrationForm.plainPassword, {
+            label: 'Password'
+        }) }}
+    </div>
+    <div class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
+
+        {{ form_end(registrationForm) }} </div>
+
+
+{% endblock %}
