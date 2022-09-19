@@ -4,6 +4,7 @@ namespace App\Controller;
 
 
 use App\Entity\User;
+use App\Form\OptionsType;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,10 +18,16 @@ class FranchiseController extends AbstractController
     public function show(ManagerRegistry $doctrine,$name, User $user): Response
     {
         $fitness = $doctrine->getRepository(User::class)->findOneBy(array('name'=>$name));
-
         $getUser = $this->getUser();
         $structures = $user->getStructures();
-        $options = $user->getOption();
+       // $options = $user->getOption();
+
+       // $form = $this->createForm(OptionsType::class);
+
+       // if ($form->isSubmitted() && $form->isValid()) {
+
+          //  return $form->getData();
+       // }
 
 
         if($getUser ->getRoles() != ['ROLE_ADMIN'] && $name != $getUser->getName()){
@@ -33,9 +40,11 @@ class FranchiseController extends AbstractController
 
 
         return $this->render('franchise/index.html.twig', [
+           // 'form' => $form->createView(),
         'structures' => $structures,
         'fitness' => $fitness,
-            'options' => $options,
+            'user'=>$getUser,
+          //  'options' => $options,
 
         ]);
 
