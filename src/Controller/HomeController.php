@@ -2,7 +2,8 @@
 
 namespace App\Controller;
 
-use App\Entity\Admin;
+
+use App\Security\Mail;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,6 +14,7 @@ class HomeController extends AbstractController
     #[Route('/', name: 'home')]
     public function index(): Response
     {
+
         return $this->render('home/index.html.twig');
     }
 }
