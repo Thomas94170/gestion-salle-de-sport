@@ -32,7 +32,7 @@ class SalleController extends AbstractController
 
           //  return $form->getData();
       //  }
-              $name = $this->getUser()->getName();
+        $name = $this->getUser()->getName();
 
             if ($this->getUser()->getRoles() == ['ROLE_ADMIN']) {
                 $options = (new \App\Entity\User)->getOption();

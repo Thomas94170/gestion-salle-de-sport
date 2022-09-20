@@ -12,8 +12,10 @@ class SecurityController extends AbstractController
     #[Route(path: '/connexion', name: 'connexion')]
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
+
          if ($this->getUser()) {
-             return $this->redirectToRoute('administration');
+             return $this->redirectToRoute('mon-compte');
+
          }
 
         // get the login error if there is one
