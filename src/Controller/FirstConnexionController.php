@@ -24,14 +24,19 @@ class FirstConnexionController extends AbstractController
         /** @var  $user User */
         $user = $this->getUser();
 
-        if ($user->isVerified()) {
-            if ($user->getRoles()== ['ROLE_USER']) {
+        if ($user->getRoles() == ['ROLE_ADMIN']) {
+            return $this->redirectToRoute('administration');
+        } elseif ($user->isVerified()) {
+            if ($user->getRoles() == ['ROLE_USER']) {
                 return $this->redirectToRoute("mon-compte");
             } else {
-
-                return $this->redirectToRoute("app_first_connexion");
+                return $this->redirectToRoute("salle", ['id' =>  $user->getId()]);
             }
         }
+
+
+
+
 
         $form = $this->createFormBuilder()
             ->add('password', RepeatedType::class, [
@@ -63,14 +68,16 @@ class FirstConnexionController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
-            if ($user->isVerified()) {
+           
+
+
                 if ($user->getRoles()== ['ROLE_USER']) {
                     return $this->redirectToRoute("mon-compte");
                 } else {
-
                     return $this->redirectToRoute("app_first_connexion");
+                   // return $this->redirectToRoute("salle", ['id' =>  $user->getId()]);
                 }
-            }
+
 
 
         }
