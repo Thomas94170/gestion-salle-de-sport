@@ -18,7 +18,10 @@ class AdminController extends AbstractController
         $users = $doctrine->getRepository(User::class)->findAll();
 
 
-        return $this->render('admin/index.html.twig', ['users' => $users]);
+        return $this->render('admin/index.html.twig', [
+            'users' => $users
+
+        ]);
 
     }
 

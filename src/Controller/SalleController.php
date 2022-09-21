@@ -3,6 +3,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Service;
 use App\Entity\Structure;
 
 use App\Entity\User;
@@ -25,6 +26,7 @@ class SalleController extends AbstractController
 
         $structure = $managerRegistry->getRepository(Structure::class)->findOneBy(array('id' => $id));
 
+        $service =  $managerRegistry->getRepository(Service::class)->findAll();
        // $form = $this->createForm(OptionsType::class);
 
          // $form->handleRequest($request);
@@ -49,6 +51,7 @@ class SalleController extends AbstractController
                 'structure' => $structure,
               //  'option' => $options,
                  'user' => $name,
+                'service'=>$service
 
 
             ]);

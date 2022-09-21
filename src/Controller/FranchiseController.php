@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 
+use App\Entity\Service;
 use App\Entity\User;
 use App\Form\OptionsType;
 use Doctrine\Persistence\ManagerRegistry;
@@ -19,8 +20,8 @@ class FranchiseController extends AbstractController
     {
         $fitness = $doctrine->getRepository(User::class)->findOneBy(array('name'=>$name));
         $getUser = $this->getUser();
-        $structures = $user->getStructures();
-       // $options = $user->getOption();
+        $structure = $user->getStructures();
+      // $service = $doctrine->getRepository(Service::class)->findAll();
 
        // $form = $this->createForm(OptionsType::class);
 
@@ -41,10 +42,10 @@ class FranchiseController extends AbstractController
 
         return $this->render('franchise/index.html.twig', [
            // 'form' => $form->createView(),
-        'structures' => $structures,
+        'structure' => $structure,
         'fitness' => $fitness,
             'user'=>$getUser,
-          //  'options' => $options,
+           // 'service'=>$service
 
         ]);
 
