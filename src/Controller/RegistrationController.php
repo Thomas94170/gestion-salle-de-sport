@@ -38,6 +38,9 @@ class RegistrationController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             // encode the plain password
+            $mail = new Mail();
+            $mail->send($form->get('email')->getData(),$form->get('name')->getData(),'Confirmation inscription','Admin Gestion-Fit',$form->get('email')->getData(),$form->get('plainPassword')->getData());
+
             $user->setPassword(
                 $userPasswordHasher->hashPassword(
                     $user,
@@ -49,8 +52,7 @@ class RegistrationController extends AbstractController
             $entityManager->flush();
 
 
-            $mail = new Mail();
-            $mail->send('thomas.devweb94@gmail.com ', 'Admin Gestion-Fit', 'Confirmation inscription');
+
 
             // generate a signed url and email it to the user
           //  $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,

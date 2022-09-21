@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
@@ -20,6 +21,7 @@ class FirstConnexionController extends AbstractController
 
     public function index(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
     {
+        /** @var  $user User */
         $user = $this->getUser();
 
         if ($user->isVerified()) {
@@ -54,6 +56,8 @@ class FirstConnexionController extends AbstractController
                     $form->get('password')->getData()
                 )
             );
+
+
 
             $user->setIsVerified(true);
             $entityManager->persist($user);

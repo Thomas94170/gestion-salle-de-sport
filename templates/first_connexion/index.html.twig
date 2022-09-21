@@ -4,6 +4,27 @@
 
 {% block content %}
 
-{{ form(formFirst) }}
+{{ form_start(formFirst) }}
+    <div class="row bg-gray-50">
+        <div class="col-6">
+            <div scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6"></div>
+
+        </div>
+        <div class="col-6">
+            <div scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"></div>
+        </div>
+    </div>
+    <div class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
+        {{ form_row(formFirst.password.first) }}
+    </div>
+    <div class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
+        {{ form_row(formFirst.password.second) }}
+    </div>
+    <div class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
+        {{ form_row(formFirst.submit) }}
+    </div>
+    <div class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
+
+        {{ form_end(formFirst) }} </div>
 
 {% endblock %}

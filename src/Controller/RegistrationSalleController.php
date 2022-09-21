@@ -20,7 +20,7 @@ use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 
 class RegistrationSalleController extends AbstractController
 {
-    private $emailVerifier;
+
 
     #[Route('/registration/salle', name: 'app_registration_salle')]
     public function index(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
@@ -31,6 +31,10 @@ class RegistrationSalleController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             // encode the plain password
+
+            $mail = new Mail();
+            $mail->send($form->get('email')->getData(),$form->get('name')->getData(),'Confirmation inscription','Admin Gestion-Fit',$form->get('email')->getData(),$form->get('plainPassword')->getData());
+
             $structure->setPassword(
                 $userPasswordHasher->hashPassword(
                     $structure,
@@ -42,24 +46,9 @@ class RegistrationSalleController extends AbstractController
             $entityManager->flush();
 
 
-            $mail = new Mail();
-            $mail->send('thomas.devweb94@gmail.com ', 'Admin Gestion-Fit', 'Confirmation inscription');
 
-            // generate a signed url and email it to the user
-           // $this->emailVerifier->sendEmailConfirmation('app_verify_email', $structure,
-             //   (new TemplatedEmail())
-              //      ->from(new Address('thomas.devweb94@gmail.com', 'Admin'))
-              //      ->to($structure->getEmail())
-              //      ->subject('Please Confirm your Email')
-               //     ->htmlTemplate('registration/confirmation_email_salle.html.twig')
-          //  );
-            // do anything else you need here, like send an email
 
-            //return $userAuthenticator->authenticateUser(
-            //  $user,
-            //   $authenticator,
-            //  $request
-            //  );
+
             return $this->redirectToRoute('administration');
         }
 
