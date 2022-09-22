@@ -55,9 +55,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'boolean')]
      private $isVerified = false;
 
+    #[ORM\ManyToMany(targetEntity: Service::class, inversedBy: 'users')]
+    private Collection $permission;
+
     public function __construct()
     {
         $this->structures = new ArrayCollection();
+        $this->permission = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -197,5 +201,29 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getStructure()
     {
+    }
+
+    /**
+     * @return Collection<int, service>
+     */
+    public function getPermission(): Collection
+    {
+        return $this->permission;
+    }
+
+    public function addPermission(service $permission): self
+    {
+        if (!$this->permission->contains($permission)) {
+            $this->permission->add($permission);
+        }
+
+        return $this;
+    }
+
+    public function removePermission(service $permission): self
+    {
+        $this->permission->removeElement($permission);
+
+        return $this;
     }
 }
