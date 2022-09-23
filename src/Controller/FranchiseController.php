@@ -6,6 +6,7 @@ namespace App\Controller;
 use App\Entity\Service;
 use App\Entity\User;
 use App\Form\OptionsType;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -18,12 +19,12 @@ class FranchiseController extends AbstractController
 
 
     #[Route('/franchise/{name}', name: 'franchise')]
-    public function show(Request $request,ManagerRegistry $doctrine,$name, User $user): Response
+    public function show(Request $request,ManagerRegistry $doctrine,$name, User $user, EntityManagerInterface $entityManager): Response
     {
         $fitness = $doctrine->getRepository(User::class)->findOneBy(array('name'=>$name));
         $getUser = $this->getUser();
         $structure = $user->getStructures();
-         $service = $doctrine->getRepository(Service::class)->findAll();
+
 
         $form = $this->createFormBuilder()
             ->add('service', EntityType::class,[
@@ -37,8 +38,18 @@ class FranchiseController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->get('service')->getViewData();
 
+            for ($i=0;$i<=count($data)-1;$i++){
+                $id = $data[$i];
+                $service = $doctrine->getRepository(Service::class)->findOneBy(array('id'=>$id));
+                $fitness->addPermission($service);
+                $entityManager->persist($fitness);
+                $entityManager->persist($service);
+                $entityManager->flush();
 
-            return $this->redirectToRoute('franchise');
+            }
+
+
+
         }
 
 
@@ -56,7 +67,7 @@ class FranchiseController extends AbstractController
         'structure' => $structure,
         'fitness' => $fitness,
             'user'=>$getUser,
-           'service'=>$service
+
 
         ]);
 
