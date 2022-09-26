@@ -80,9 +80,11 @@
                         <tr>
 
                             <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"> {{ form_label(service) }}</td>
-                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">  {{ form_widget(service) }}</td>
-
-
+                            {% if user_service.service_id is defined %}
+                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">OUI  {{ form_widget(service) }}</td>
+                            {% else %}
+                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">NON  {{ form_widget(service) }}</td>
+                                {% endif %}
 
                             {#   <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><a href="{{ path('salle' ,{'id' : structure.id}) }}">Détails</a></td>#}
                         </tr>

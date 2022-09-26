@@ -18,6 +18,8 @@ class FranchiseController extends AbstractController
 {
 
 
+
+
     #[Route('/franchise/{name}', name: 'franchise')]
     public function show(Request $request,ManagerRegistry $doctrine,$name, User $user, EntityManagerInterface $entityManager): Response
     {
