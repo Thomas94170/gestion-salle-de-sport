@@ -18,7 +18,7 @@
             </div>
             <ul class="nav" id="side-menu">
                 <li>
-                    <a href="#"> Entities<span class="fa arrow"></span></a>
+                    <a href="#"> Rechercher<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level" id="entitiesNav">
                     </ul>
                 </li>
@@ -46,27 +46,25 @@
                                 </th>
                             </tr>
                             </thead>
-                            <tbody class="divide-y divide-gray-200 bg-white">
-                            {% for user in user %}
-
+                            <tbody id="result" class="divide-y divide-gray-200 bg-white">
+                            {% if user is empty %}
                                 <tr>
-                                <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">{{user.name}}</td>
-                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ user.email }}</td><td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-
+                                    <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 text-center">Aucun résultat</td>
+                                </tr>
+                            {% endif %}
+                            {% for user in user %}
+                                <tr>
+                                    <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">{{user.name}}</td>
+                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ user.email }}</td><td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                                         <div class="form-check form-switch">
                                             <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" {% if user.roles == ['ROLES_USER']%} disabled{% endif %}>
                                             <label class="form-check-label" for="flexSwitchCheckChecked"></label>
                                         </div>
-
                                     </td>
                                     <td class="whitespace-nowrap px-3 py-4 text-sm font-medium text-gray-500"><a href="{{ path('franchise', {'name':user.name }) }}">Détails</a></td>
-
-
-                                </td>
+                                    </td>
                                 </tr>
-
                             {% endfor %}
-
                             <!-- More people... -->
                             </tbody>
                         </table>
@@ -91,43 +89,22 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
     <script type="text/javascript">
-        jQuery(document).ready(function() {
-            var searchRequest = null;
-            $("#search").keyup(function() {
-                var minlength = 3;
-                var that = this;
-                var value = $(this).val();
-                var entitySelector = $("#entitiesNav").html('');
-                if (value.length >= minlength ) {
-                    if (searchRequest != null)
-                        searchRequest.abort();
-                    searchRequest = $.ajax({
-                        type: "GET",
-                        url: "{{ path('ajax_search') }}",
-                        data: {
-                            'q' : value
-                        },
-                        dataType: "text",
-                        success: function(msg){
-                            //we need to check if the value is the same
-                            if (value==$(that).val()) {
-                                var result = JSON.parse(msg);
-                                $.each(result, function(key, arr) {
-                                    $.each(arr, function(id, value) {
-                                        if (key == 'entities') {
-                                            if (id != 'error') {
-                                                entitySelector.append('<li><a href="/salle/'+id+'">'+value+'</a></li>');
-                                            } else {
-                                                entitySelector.append('<li class="errorLi">'+value+'</li>');
-                                            }
-                                        }
-                                    });
-                                });
-                            }
-                        }
-                    });
+        $('#search').keyup(function (){
+            const data = [];
+            data.push({
+                'value': $('#search').val(),
+            });
+            const jsonString = JSON.stringify({data: data});
+            $.ajax({
+                type: "POST",
+                url: "{{ path('administration') }}",
+                data: 'data='+ jsonString,
+                complete: function(html) {
+                    $('#result').replaceWith(
+                        $(html.responseText).find('#result')
+                    );
                 }
             });
-        });
+        })
     </script>
 {% endblock %}

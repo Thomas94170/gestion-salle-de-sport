@@ -26,6 +26,8 @@ class AdminController extends AbstractController
 
         $requestString = $request->get('q');
 
+
+
         $entities =  $managerRegistry->getRepository(User::class)->findEntitiesByString($requestString);
 
         if(!$entities) {
@@ -40,7 +42,7 @@ class AdminController extends AbstractController
     public function getRealEntities($entities){
 
         foreach ($entities as $entity){
-            $realEntities[$entity->getId()] = $entity->getName();
+            $realEntities[$entity->getId()] = [$entity->getName(),$entity->getEmail()];
         }
 
         return $realEntities;
@@ -48,9 +50,18 @@ class AdminController extends AbstractController
 
 
     #[Route('/administration', name: 'administration')]
-    public function show(ManagerRegistry $doctrine): Response
+    public function show(ManagerRegistry $doctrine, Request $request): Response
     {
-        $users = $doctrine->getRepository(User::class)->findAll();
+
+        if($_POST){
+            $result = json_decode($request->request->get('data'), true);
+            $result = $result['data'][0]['value'];
+            $users = $doctrine->getRepository(User::class)->findBySearch($result);
+            dump($users);
+        }
+        else {
+            $users = $doctrine->getRepository(User::class)->findAll();
+        }
 
 
         return $this->render('admin/index.html.twig', [
