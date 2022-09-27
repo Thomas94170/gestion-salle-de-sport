@@ -16,64 +16,56 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class FranchiseController extends AbstractController
 {
-
-
-
-
     #[Route('/franchise/{name}', name: 'franchise')]
-    public function show(Request $request,ManagerRegistry $doctrine,$name, User $user, EntityManagerInterface $entityManager): Response
+    public function show(Request $request, ManagerRegistry $doctrine, $name, User $user, EntityManagerInterface $entityManager): Response
     {
-        $fitness = $doctrine->getRepository(User::class)->findOneBy(array('name'=>$name));
+        $fitness = $doctrine->getRepository(User::class)->findOneBy(array('name' => $name));
+        /** @var User $getUser */
         $getUser = $this->getUser();
         $structure = $user->getStructures();
-
-
-        $form = $this->createFormBuilder()
-            ->add('service', EntityType::class,[
-                'class'=>Service::class,
-                'multiple'=>true,
-                'expanded'=>true
-            ])
-            ->getForm();
-
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $data = $form->get('service')->getViewData();
-
-            for ($i=0;$i<=count($data)-1;$i++){
-                $id = $data[$i];
-                $service = $doctrine->getRepository(Service::class)->findOneBy(array('id'=>$id));
-                $fitness->addPermission($service);
-                $entityManager->persist($fitness);
-                $entityManager->persist($service);
-                $entityManager->flush();
-
-            }
-
-
-
-        }
-
-
-        if($getUser ->getRoles() != ['ROLE_ADMIN'] && $name != $getUser->getName()){
-            return $this->redirectToRoute('franchise', ['name' => $getUser->getName()]);
-        }
+        $service = $entityManager->getRepository(Service::class)->findAll();
 
         if (!$fitness) {
             return $this->redirectToRoute('connexion',);
         }
 
+        $form = $this->createFormBuilder()
+            ->add('permission', EntityType::class, [
+                'class' => Service::class,
+                'multiple' => true,
+                'expanded' => true,
+                'data' => $fitness->getPermission($service)
+            ])->getForm();
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            foreach ($form->getData()['permission'] as $serviceId) {
+                $service = $entityManager->getRepository(Service::class)->find($serviceId);
+                $fitness->addPermission($service);
+            };
+            $entityManager->persist($fitness);
+            $entityManager->flush();
+        }
+
+        if ($getUser->getRoles() != ['ROLE_ADMIN'] && $name != $getUser->getName()) {
+            return $this->redirectToRoute('franchise', ['name' => $getUser->getName()]);
+        }
 
         return $this->render('franchise/index.html.twig', [
             'form' => $form->createView(),
-        'structure' => $structure,
-        'fitness' => $fitness,
-            'user'=>$getUser,
-
-
+            'structure' => $structure,
+            'fitness' => $fitness,
+            'user' => $getUser,
         ]);
-
-
-
     }
+        //gestion des options modifié en bdd
 }
+
+
+
+
+
+
+
+

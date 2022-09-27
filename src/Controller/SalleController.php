@@ -26,14 +26,11 @@ class SalleController extends AbstractController
 
         $structure = $managerRegistry->getRepository(Structure::class)->findOneBy(array('id' => $id));
 
-        $service =  $managerRegistry->getRepository(Service::class)->findAll();
-       // $form = $this->createForm(OptionsType::class);
+      //  $service =  $managerRegistry->getRepository(Service::class)->findAll();
 
-         // $form->handleRequest($request);
-       // if ($form->isSubmitted() && $form->isValid()) {
+        $serviceAll =  $managerRegistry->getRepository(Service::class)->findAll();
+        $service = $structure->getProprietaire()->getPermission($serviceAll);
 
-          //  return $form->getData();
-      //  }
         $name = $this->getUser()->getName();
 
             if ($this->getUser()->getRoles() == ['ROLE_ADMIN']) {

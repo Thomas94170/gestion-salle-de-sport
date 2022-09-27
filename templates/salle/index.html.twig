@@ -38,24 +38,26 @@
                                     </tr>
                                     </thead>
                                     <tbody class="divide-y divide-gray-200 bg-white">
-                                    {% for service in service %}
+                                    {% if service is empty %}
                                         <tr>
-
-                                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ service.name }}</td>
-                                             <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{% if service.isActive==true%}
-                                                     <p class="text-lime-400 italic">Validé</p>
-                                                 {% else %}
-                                                     <p class="text-red-600 italic">Non disponible</p>
-                                                 {% endif %}
-                                                 </td>
-                                            <div class="form-check form-switch">
-
-                                                <label class="form-check-label" for="flexSwitchCheckChecked"></label>
-                                            </div>
-
-                                            {#   <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><a href="{{ path('salle' ,{'id' : structure.id}) }}">Détails</a></td>#}
+                                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                                <p class="text-red-400 italic text-center">Aucun service proposé dans cette salle</p>
+                                            </td>
                                         </tr>
-                                    {% endfor %}
+                                    {% else %}
+                                        {% for service in service %}
+                                            <tr>
+                                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ service.name }}</td>
+                                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                                    <p class="text-lime-400 italic">Validé</p>
+                                                </td>
+                                                <div class="form-check form-switch">
+                                                    <label class="form-check-label" for="flexSwitchCheckChecked"></label>
+                                                </div>
+                                                {#   <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><a href="{{ path('salle' ,{'id' : structure.id}) }}">Détails</a></td>#}
+                                            </tr>
+                                        {% endfor %}
+                                    {% endif %}
                                     </tbody>
                                 </table>
                            {#  </div>#}
