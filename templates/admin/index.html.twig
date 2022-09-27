@@ -3,6 +3,7 @@
 {% block title %}Admin{% endblock %}
 
 {% block content %}
+{{ dump(user) }}
     <!-- This example requires Tailwind CSS v2.0+ -->
     <div class="px-4 sm:px-6 lg:px-8">
         <div class="sm:flex sm:items-center">
@@ -10,24 +11,29 @@
                 <h1 class="text-xl font-semibold text-gray-900">Users</h1>
                 <p class="mt-2 text-sm text-gray-700">A list of all the users in your account including their name, title, email and role.</p>
             </div>
-            <div class="sidebar-search">
-                <div class="input-group custom-search-form">
-                    <input type="text" id="search" class="form-control" placeholder="Rechercher...">
-                </div>
-                <!-- /input-group -->
-            </div>
-            <ul class="nav" id="side-menu">
-                <li>
-                    <a href="#"> Rechercher<span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level" id="entitiesNav">
-                    </ul>
-                </li>
-            </ul>
             <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
                 <a href="{{ path('app_register') }}" type="button" class="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">Ajouter un Franchiseur</a>
                {#  <a href="" type="button" class="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">Ajouter une Salle</a> #}
             </div>
         </div>
+        <br>
+        <div class="row">
+            <div class="col-3 overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+                <button onclick="active()">Activé</button>
+                <button onclick="desactive()">Désactivé</button>
+                <button onclick="reset()">Annuler</button>
+            </div>
+            <div class="col-9">
+                <div class="sidebar-search">
+                    <div class="input-group custom-search-form">
+                        <input type="text" id="search" class="form-control" placeholder="Rechercher une franchise...">
+                    </div>
+                    <!-- /input-group -->
+                </div>
+            </div>
+        </div>
+
+        <br>
         <div class="mt-8 flex flex-col">
             <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
@@ -58,7 +64,7 @@
                                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ user.email }}</td><td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                                         <div class="form-check form-switch">
                                             <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" {% if user.roles == ['ROLES_USER']%} disabled{% endif %}>
-                                            <label class="form-check-label" for="flexSwitchCheckChecked"></label>
+                                            <label class="form-check-label" for="flexSwitchCheckChecked">{{ user.isActive }}</label>
                                         </div>
                                     </td>
                                     <td class="whitespace-nowrap px-3 py-4 text-sm font-medium text-gray-500"><a href="{{ path('franchise', {'name':user.name }) }}">Détails</a></td>
@@ -106,5 +112,44 @@
                 }
             });
         })
+
+
+
+        $('#active').click(function (){
+            const data = [];
+            data.push({
+                'value': $('#active').val(),
+            });
+            const jsonString = JSON.stringify({data: data});
+            $.ajax({
+                type: "POST",
+                url: "{{ path('administration') }}",
+                data: 'data='+ jsonString,
+                complete: function(html) {
+                    $('#result').replaceWith(
+                        $(html.responseText).find('#result')
+                    );
+                }
+            });
+        })
+
+
+        //filtre checkbox
+        function active() {
+            if (user.is_active)
+            document.getElementById("").innerHTML = "";
+        }
+
+        function desactive() {
+            document.getElementById("").innerHTML = "";
+        }
+
+        function reset() {
+            document.getElementById("").innerHTML = "";
+        }
+
+
+
+
     </script>
 {% endblock %}
