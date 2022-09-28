@@ -67,15 +67,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         return $qb->getQuery()->getResult();
     }
 
-    //filtre checkbox actif/inactif
 
-    public function findByCheck($result)
-    {
-        $qb = $this->createQueryBuilder('o')
-            ->where('o.is_active = :active')
-            ->setParameter('active', '%'.$result.'%');
-        return $qb->getQuery()->getResult();
-    }
 
 
 

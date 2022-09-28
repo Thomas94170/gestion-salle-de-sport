@@ -46,7 +46,7 @@ class SalleController extends AbstractController
             return $this->render('salle/index.html.twig', [
                // 'form' => $form->createView(),
                 'structure' => $structure,
-              //  'option' => $options,
+                'option' => $options,
                  'user' => $name,
                 'service'=>$service
 
