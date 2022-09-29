@@ -4,9 +4,12 @@
 namespace App\Controller;
 
 
+use App\Entity\Service;
 use App\Entity\User;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 
@@ -17,13 +20,12 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class AdminController extends AbstractController
 {
-    //barre de recherche dynamique
-
 
     #[Route('/administration', name: 'administration')]
-    public function show(ManagerRegistry $doctrine, Request $request): Response
+    public function show(ManagerRegistry $doctrine, Request $request,EntityManagerInterface $entityManager): Response
     {
 
+        //searchbar ajax
         if ($_POST) {
             $result = json_decode($request->request->get('data'), true);
             $result = $result['data'][0]['value'];
@@ -33,7 +35,8 @@ class AdminController extends AbstractController
             $users = $doctrine->getRepository(User::class)->findAll();
         }
         return $this->render('admin/index.html.twig', [
-            'user' => $users
+            'user' => $users,
+           // 'form'=> $form
 
         ]);
 

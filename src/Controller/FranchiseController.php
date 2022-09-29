@@ -10,6 +10,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -25,9 +26,28 @@ class FranchiseController extends AbstractController
         $structure = $user->getStructures();
         $service = $entityManager->getRepository(Service::class)->findAll();
 
-        if (!$fitness) {
-            return $this->redirectToRoute('connexion',);
+        //formulaire activation desactivation totale d'une franchise
+
+        $activation_form = $this->createFormBuilder()
+            ->add('activation', CheckboxType::class,[
+                'data'=>$fitness->isIsActive()
+            ])->getForm();
+
+        $activation_form->handleRequest($request);
+        if ($activation_form->isSubmitted()&& $activation_form->isValid()){
+            foreach ($activation_form->getData()['activation'] as $dataActive) {
+                $active = $entityManager->getRepository(User::class)->find($dataActive);
+                $fitness->setIsActive($active);
+            };
+            $entityManager->persist($fitness);
+            $entityManager->flush();
         }
+
+
+        //formulaire permissions globales
+       // if (!$fitness) {
+       //     return $this->redirectToRoute('connexion',);
+       // }
 
         $form = $this->createFormBuilder()
             ->add('permission', EntityType::class, [
@@ -57,9 +77,10 @@ class FranchiseController extends AbstractController
             'structure' => $structure,
             'fitness' => $fitness,
             'user' => $getUser,
+            'activation_form'=>$activation_form
         ]);
     }
-        //gestion des options modifié en bdd
+
 }
 
 

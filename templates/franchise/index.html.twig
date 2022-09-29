@@ -3,15 +3,37 @@
 {% block title %} Les Franchises {% endblock %}
 
 {% block content %}
+    <br>
     <div class="px-4 sm:px-6 lg:px-8">
         <div class="sm:flex sm:items-center">
-            <div class="sm:flex-auto">
-                <h1 class="text-xl font-semibold text-gray-900">Users</h1>
-                <p class="mt-2 text-sm text-gray-700">name, title, email and role.</p>
+            <div class="card" style="width: 18rem;">
+                {% if fitness.isActive %}
+                <div class="card-body overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+                    <b class="card-title">{{ fitness.name }}</b>
+                    <br>
+                    <br>
+                    <p class="card-text">{{ fitness.email}}</p>
+                    <br>
+                </div>
+                {% else %}
+                <div class="card-body overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg bg-opacity-5">
+                    <b class="card-title">{{ fitness.name }}</b>
+                    <p class="text-red-500">Contrat désactivé</p>
+                    <br>
+                    <p class="card-text">{{ fitness.email}}</p>
+                    <br>
+                </div>
+                {% endif %}
             </div>
+                {% if fitness.isActive %}
             <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
                 <a href="{{ path('app_registration_salle') }}" type="button" class="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">Ajouter une Salle</a>
             </div>
+            {% else %}
+            <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
+                <a href="#" type="button" class="inline-flex items-center justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:w-auto">Activer contrat pour ajouter une salle</a>
+            </div>
+            {% endif %}
         </div>
     </div>
 
