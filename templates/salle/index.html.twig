@@ -3,7 +3,10 @@
 {% block title %}Salle de sport{% endblock %}
 
 {% block content %}
-
+    <br>
+    {% if user.roles is same as ['ROLE_ADMIN']   %}
+    <div class="text-end mr-2"><a href="{{ path('administration') }}">Retour vers l'accueil</a></div>
+    {% endif %}
     <div class="row ">
         <div class="col-md-2"></div>
         <div class="col-md-4 mt-5">

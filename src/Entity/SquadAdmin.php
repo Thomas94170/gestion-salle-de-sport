@@ -21,7 +21,10 @@ class SquadAdmin implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private array $roles = [];
 
-
+    public function __toString()
+    {
+        return $this->getName();
+    }
 
     /**
      * @var string The hashed password

@@ -31,7 +31,7 @@ class SalleController extends AbstractController
         $serviceAll =  $managerRegistry->getRepository(Service::class)->findAll();
         $service = $structure->getProprietaire()->getPermission($serviceAll);
 
-        $name = $this->getUser()->getName();
+        $user = $this->getUser();
 
             if ($this->getUser()->getRoles() == ['ROLE_ADMIN']) {
                 $options = (new \App\Entity\User)->getOption();
@@ -47,7 +47,7 @@ class SalleController extends AbstractController
                // 'form' => $form->createView(),
                 'structure' => $structure,
                 'option' => $options,
-                 'user' => $name,
+                 'user' => $user,
                 'service'=>$service
 
 
