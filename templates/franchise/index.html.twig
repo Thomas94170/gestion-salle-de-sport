@@ -10,18 +10,26 @@
                 {% if fitness.isActive %}
                 <div class="card-body overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
                     <b class="card-title">{{ fitness.name }}</b>
-                    <br>
+                    <p class="text-lime-400 italic">Contrat activé</p>
                     <br>
                     <p class="card-text">{{ fitness.email}}</p>
                     <br>
+                    {{ form_start(activation_form) }}
+                    {{ form_widget(activation_form.activation,{'label':'Désactiver','attr':{'class':'inline-flex items-center justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:w-auto'}}) }}
+
+                    {{ form_end(activation_form) }}
                 </div>
                 {% else %}
                 <div class="card-body overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg bg-opacity-5">
                     <b class="card-title">{{ fitness.name }}</b>
-                    <p class="text-red-500">Contrat désactivé</p>
+                    <p class="text-red-500 italic">Contrat désactivé</p>
                     <br>
                     <p class="card-text">{{ fitness.email}}</p>
                     <br>
+                    {{ form_start(activation_form) }}
+                    {{ form_widget(activation_form.activation,{'label':'Activer','attr':{'class':'inline-flex items-center justify-center rounded-md border border-transparent bg-lime-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-lime-700 focus:outline-none focus:ring-2 focus:ring-lime-500 focus:ring-offset-2 sm:w-auto'}}) }}
+
+                    {{ form_end(activation_form) }}
                 </div>
                 {% endif %}
             </div>
@@ -31,7 +39,7 @@
             </div>
             {% else %}
             <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
-                <a href="#" type="button" class="inline-flex items-center justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:w-auto">Activer contrat pour ajouter une salle</a>
+                <button type="button" class="inline-flex items-center justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:w-auto">Activer contrat pour ajouter une salle et avoir accès aux services proposés</button>
             </div>
             {% endif %}
         </div>
@@ -86,9 +94,10 @@
         <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
                 {#   <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">#}
+
                 <table class="min-w-full divide-y divide-gray-300">
                     <thead class="bg-gray-50">
-
+                    {% if fitness.isActive %}
                     <tr>
                         <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">Services proposés</th>
                         <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Activé?</th>
@@ -96,6 +105,7 @@
                         </th>
                     </tr>
                     </thead>
+
                     <tbody class="divide-y divide-gray-200 bg-white">
                     {{ form_start(form) }}
                     {% for service in form.permission %}
@@ -114,6 +124,7 @@
                     <button class="bg-teal-400 text-center p-4 m-4 rounded-md" type="submit">Valider</button>
                     {{ form_end(form) }}
                     </tbody>
+                    {% endif %}
                 </table>
                 {#  </div>#}
 

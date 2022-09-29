@@ -11,6 +11,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -29,16 +30,16 @@ class FranchiseController extends AbstractController
         //formulaire activation desactivation totale d'une franchise
 
         $activation_form = $this->createFormBuilder()
-            ->add('activation', CheckboxType::class,[
-                'data'=>$fitness->isIsActive()
+            ->add( 'activation',SubmitType::class,[
+
             ])->getForm();
 
         $activation_form->handleRequest($request);
         if ($activation_form->isSubmitted()&& $activation_form->isValid()){
-            foreach ($activation_form->getData()['activation'] as $dataActive) {
-                $active = $entityManager->getRepository(User::class)->find($dataActive);
-                $fitness->setIsActive($active);
-            };
+
+
+                $fitness->setIsActive(!$fitness->isIsActive());
+
             $entityManager->persist($fitness);
             $entityManager->flush();
         }
@@ -77,7 +78,7 @@ class FranchiseController extends AbstractController
             'structure' => $structure,
             'fitness' => $fitness,
             'user' => $getUser,
-            'activation_form'=>$activation_form
+            'activation_form'=>$activation_form->createView()
         ]);
     }
 
