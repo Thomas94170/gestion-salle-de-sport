@@ -6,6 +6,8 @@ namespace App\Controller;
 use App\Entity\Service;
 use App\Entity\User;
 use App\Form\OptionsType;
+use App\Security\MailPermSalle;
+use App\Security\MailSalle;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -27,6 +29,7 @@ class FranchiseController extends AbstractController
         $structure = $user->getStructures();
         $service = $entityManager->getRepository(Service::class)->findAll();
 
+
         //formulaire activation desactivation totale d'une franchise
 
         $activation_form = $this->createFormBuilder()
@@ -43,12 +46,7 @@ class FranchiseController extends AbstractController
             $entityManager->persist($fitness);
             $entityManager->flush();
         }
-
-
-        //formulaire permissions globales
-       // if (!$fitness) {
-       //     return $this->redirectToRoute('connexion',);
-       // }
+        //form des permissions
 
         $form = $this->createFormBuilder()
             ->add('permok', SubmitType::class)
@@ -62,6 +60,13 @@ class FranchiseController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
 
+            //envoi mail
+
+            $mail = new MailPermSalle();
+            $mail->send($fitness->getEmail(),'','Modification des permissions liées à votre contrat','');
+
+
+            //mes services sont ajoutés à mes structure
             foreach ($form->getData()['permission'] as $serviceId) {
                 $service = $entityManager->getRepository(Service::class)->find($serviceId);
                 $fitness->addPermission($service);
@@ -70,13 +75,12 @@ class FranchiseController extends AbstractController
             $entityManager->flush();
         }
 
-       // if ($getUser->getRoles() != ['ROLE_ADMIN'] && $name != $getUser->getName()) {
-       //     return $this->redirectToRoute('franchise', ['name' => $getUser->getName()]);
-       // }
 
         if ($getUser->getRoles() == ['ROLE_ADMIN'] && $name == $getUser->getName()) {
             return $this->redirectToRoute('franchise', ['name' => $getUser->getName()]);
         }
+
+
 
         return $this->render('franchise/index.html.twig', [
             'form' => $form->createView(),
