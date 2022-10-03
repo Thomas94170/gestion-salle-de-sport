@@ -6,7 +6,8 @@ use App\Entity\Structure;
 use App\Entity\User;
 use App\Form\RegisterSalleFormType;
 use App\Form\RegistrationFormType;
-use App\Security\Mail;
+use App\Security\MailInfoUser;
+use App\Security\MailSalle;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -32,8 +33,18 @@ class RegistrationSalleController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             // encode the plain password
 
-            $mail = new Mail();
-            $mail->send($form->get('email')->getData(),$form->get('name')->getData(),'Confirmation inscription','Admin Gestion-Fit',$form->get('email')->getData(),$form->get('plainPassword')->getData());
+            $mail = new MailSalle();
+            $mail->send($form->get('email')->getData(),'','Confirmation inscription','Admin Gestion-Fit',$form->get('email')->getData(),$form->get('plainPassword')->getData());
+            //,$form->get('name')->getData()
+            $structure->setPassword(
+                $userPasswordHasher->hashPassword(
+                    $structure,
+                    $form->get('plainPassword')->getData()
+                )
+            );
+
+            $mailInfo = new MailInfoUser();
+            $mailInfo->send($form->get('proprietaire')->getData()->getEmail(),'','Confirmation inscription',$form->get('address')->getData(),$form->get('email')->getData(),$form->get('plainPassword')->getData());
 
             $structure->setPassword(
                 $userPasswordHasher->hashPassword(
@@ -41,6 +52,8 @@ class RegistrationSalleController extends AbstractController
                     $form->get('plainPassword')->getData()
                 )
             );
+
+
 
             $entityManager->persist($structure);
             $entityManager->flush();

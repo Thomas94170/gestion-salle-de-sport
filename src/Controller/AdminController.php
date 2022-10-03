@@ -25,6 +25,7 @@ class AdminController extends AbstractController
     public function show(ManagerRegistry $doctrine, Request $request,EntityManagerInterface $entityManager): Response
     {
 
+
         //searchbar ajax
         if ($_POST) {
             $result = json_decode($request->request->get('data'), true);
@@ -37,6 +38,7 @@ class AdminController extends AbstractController
         return $this->render('admin/index.html.twig', [
             'user' => $users,
            // 'form'=> $form
+
 
         ]);
 

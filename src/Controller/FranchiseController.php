@@ -51,6 +51,7 @@ class FranchiseController extends AbstractController
        // }
 
         $form = $this->createFormBuilder()
+            ->add('permok', SubmitType::class)
             ->add('permission', EntityType::class, [
                 'class' => Service::class,
                 'multiple' => true,
@@ -69,7 +70,11 @@ class FranchiseController extends AbstractController
             $entityManager->flush();
         }
 
-        if ($getUser->getRoles() != ['ROLE_ADMIN'] && $name != $getUser->getName()) {
+       // if ($getUser->getRoles() != ['ROLE_ADMIN'] && $name != $getUser->getName()) {
+       //     return $this->redirectToRoute('franchise', ['name' => $getUser->getName()]);
+       // }
+
+        if ($getUser->getRoles() == ['ROLE_ADMIN'] && $name == $getUser->getName()) {
             return $this->redirectToRoute('franchise', ['name' => $getUser->getName()]);
         }
 

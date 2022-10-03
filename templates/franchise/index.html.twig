@@ -108,7 +108,7 @@
     <br>
     <br>
 
-
+    {% if user.roles is same as ['ROLE_ADMIN']   %}
     <div class="mt-8 flex flex-col">
         <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
@@ -140,9 +140,10 @@
                             {#   <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><a href="{{ path('salle' ,{'id' : structure.id}) }}">Détails</a></td>#}
                         </tr>
                     {% endfor %}
-                    {% if user.roles is same as ['ROLE_ADMIN']   %}
-                    <button class="bg-teal-400 text-center p-4 m-4 rounded-md" type="submit">Valider</button>
-                    {% endif %}
+                   {#  {{ form_label(form,{'attr':{'onsubmit':'return confirm("Confirmez vous votre choix?")'}}) }} #}
+                    {{ form_widget(form.permok,{'label':'Activer','attr':{'class':'bg-teal-400 text-center p-4 m-4 rounded-md'}}) }}
+                   {#   <button class="bg-teal-400 text-center p-4 m-4 rounded-md" type="submit">Valider</button>#}
+
                     {{ form_end(form) }}
                     </tbody>
                     {% endif %}
@@ -152,6 +153,7 @@
             </div>
         </div>
     </div>
+    {% endif %}
 
     <br>
     <br>
