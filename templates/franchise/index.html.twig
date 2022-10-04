@@ -45,7 +45,7 @@
                 {% if fitness.isActive %}
             <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
                 {% if user.roles is same as ['ROLE_ADMIN']   %}
-                <a href="{{ path('app_registration_salle') }}" type="button" class="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">Ajouter une Salle</a>
+              {#   <a href="{{ path('app_registration_salle') }}" type="button" class="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">Ajouter une Salle</a>#}
                 {% endif %}
             </div>
             {% else %}
@@ -126,7 +126,7 @@
                     </thead>
 
                     <tbody class="divide-y divide-gray-200 bg-white">
-                    {{ form_start(form) }}
+                    {{ form_start(form,{'attr': {'role': 'form', 'onsubmit': 'return confirm("Êtes-vous sûr de vouloir effectuer cette modification ?")'}}) }}
                     {% for service in form.permission %}
                         <tr>
 
@@ -140,7 +140,7 @@
                             {#   <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><a href="{{ path('salle' ,{'id' : structure.id}) }}">Détails</a></td>#}
                         </tr>
                     {% endfor %}
-                   {#  {{ form_label(form,{'attr':{'onsubmit':'return confirm("Confirmez vous votre choix?")'}}) }} #}
+
                     {{ form_widget(form.permok,{'label':'Activer','attr':{'class':'bg-teal-400 text-center p-4 m-4 rounded-md'}}) }}
                    {#   <button class="bg-teal-400 text-center p-4 m-4 rounded-md" type="submit">Valider</button>#}
 

@@ -20,7 +20,21 @@
         </div>
     </div>
     <div class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
-        {{ form_row(registrationForm.proprietaire) }}
+
+        <div class="card-body  ring-1 ring-black ring-opacity-5 md:rounded-lg">
+            <div class="text-center">
+                <br>
+                <b class="card-title text-sm font-medium text-gray-900 sm:pl-6">Rattachées à : </b>
+            </div>
+
+            <br>
+            <br>
+            {{ form_label(registrationForm.proprietaire,'',{'label_attr':{'class':'hidden'}}) }}
+            <p class="card-text"> {{ form_widget(registrationForm.proprietaire) }}</p>
+            <br>
+
+        </div>
+
     </div>
     <div class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
         {{ form_row(registrationForm.address) }}

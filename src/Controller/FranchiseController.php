@@ -4,8 +4,10 @@ namespace App\Controller;
 
 
 use App\Entity\Service;
+use App\Entity\Structure;
 use App\Entity\User;
 use App\Form\OptionsType;
+use App\Security\MailModifPermSalle;
 use App\Security\MailPermSalle;
 use App\Security\MailSalle;
 use Doctrine\ORM\EntityManagerInterface;
@@ -17,6 +19,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Doctrine\Common\Collections\ArrayCollection;
 
 class FranchiseController extends AbstractController
 {
@@ -27,9 +30,12 @@ class FranchiseController extends AbstractController
         /** @var User $getUser */
         $getUser = $this->getUser();
         $structure = $user->getStructures();
+        $structurePermission = $user;
         $service = $entityManager->getRepository(Service::class)->findAll();
 
 
+        //dd($test);
+       // dd(  $user->getStructures());
         //formulaire activation desactivation totale d'une franchise
 
         $activation_form = $this->createFormBuilder()
@@ -64,6 +70,10 @@ class FranchiseController extends AbstractController
 
             $mail = new MailPermSalle();
             $mail->send($fitness->getEmail(),'','Modification des permissions liées à votre contrat','');
+              //  dd($structurePermission->getStructures()->getOwner()->getStructures());
+           // dd($structure->getStructures());
+            $mailModifPermSalle = new MailModifPermSalle();
+            $mailModifPermSalle->send($structurePermission->getEmail(),'','Modification des permissions accordées à votre salle','');
 
 
             //mes services sont ajoutés à mes structure

@@ -38,6 +38,8 @@ class FirstConnexionController extends AbstractController
 
 
 
+
+
         $form = $this->createFormBuilder()
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
@@ -68,14 +70,17 @@ class FirstConnexionController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
-           
+
 
 
                 if ($user->getRoles()== ['ROLE_USER']) {
-                    return $this->redirectToRoute("mon-compte");
+
+                        return $this->redirectToRoute("mon-compte");
+
                 } else {
-                    return $this->redirectToRoute("app_first_connexion");
-                   // return $this->redirectToRoute("salle", ['id' =>  $user->getId()]);
+                 //   return $this->redirectToRoute("app_first_connexion");
+
+                     return $this->redirectToRoute("salle", ['id' =>  $user->getId()]);
                 }
 
 

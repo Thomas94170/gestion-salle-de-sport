@@ -25,6 +25,9 @@ class RegisterSalleFormType extends AbstractType
     {
         $builder
             ->add('proprietaire',EntityType::class,[
+                'attr'=>[
+                    'class'=>'m-4 flex justify-evenly'
+                ],
                 'class'=> User::class,
                 'choices'=> $this->getUsers(),
                 'multiple'=>false,

@@ -5,7 +5,7 @@ namespace App\Security;
 use Mailjet\Client;
 use Mailjet\Resources;
 
-class MailPermSalle
+class MailModifPermSalle
 {
     private string $api_key = '0045c4a14e8928459b09c927ef4ebc6d';
     private string $api_key_secret = '2522cf3a5072dfc0ba5f8239aea53df2';
@@ -25,9 +25,9 @@ class MailPermSalle
                             'Name' => $to_name
                         ]
                     ],
-                    'TemplateID' =>  4247802,
+                    'TemplateID' =>  4247863,
                     'TemplateLanguage' => true,
-                    'Subject' => "Modification des permissions liées à votre contrat",
+                    'Subject' => "Modification des permissions accordées à votre salle",
                     'Variables' => [
                         'address'=>$address,
 
