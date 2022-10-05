@@ -70,8 +70,13 @@ class FranchiseController extends AbstractController
             $mail = new MailPermSalle();
             $mail->send($fitness->getEmail(),'','Modification des permissions liées à votre contrat','');
 
-            $mailModifPermSalle = new MailModifPermSalle();
-            $mailModifPermSalle->send($structure->getEmail(),'','Modification des permissions accordées à votre salle','');
+            //etant donné que toute mes salles heritent des mm permissions je fais un foreach
+            foreach ($structure as $structures){
+                $mailModifPermSalle = new MailModifPermSalle();
+                $mailModifPermSalle->send($structures->getEmail(),'','Modification des permissions accordées à votre salle','');
+            }
+
+
 
             //mes services sont ajoutés à mes structure
             foreach ($form->getData()['permission'] as $serviceId) {
