@@ -30,7 +30,7 @@ class FranchiseController extends AbstractController
         /** @var User $getUser */
         $getUser = $this->getUser();
         $structure = $user->getStructures();
-        $service = $entityManager->getRepository(Service::class)->findAll();
+        $service = $doctrine->getRepository(Service::class)->findAll();
 
 
 
@@ -70,6 +70,8 @@ class FranchiseController extends AbstractController
             $mail = new MailPermSalle();
             $mail->send($fitness->getEmail(),'','Modification des permissions liées à votre contrat','');
 
+            $mailModifPermSalle = new MailModifPermSalle();
+            $mailModifPermSalle->send($structure->getEmail(),'','Modification des permissions accordées à votre salle','');
 
             //mes services sont ajoutés à mes structure
             foreach ($form->getData()['permission'] as $serviceId) {
