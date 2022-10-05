@@ -24,9 +24,13 @@ class Service
     #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'permission')]
     private Collection $users;
 
+    #[ORM\ManyToMany(targetEntity: Structure::class, mappedBy: 'permission')]
+    private Collection $structures;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
+        $this->structures = new ArrayCollection();
     }
 
     public function __toString()
@@ -85,6 +89,33 @@ class Service
     {
         if ($this->users->removeElement($user)) {
             $user->removePermission($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Structure>
+     */
+    public function getStructures(): Collection
+    {
+        return $this->structures;
+    }
+
+    public function addStructure(Structure $structure): self
+    {
+        if (!$this->structures->contains($structure)) {
+            $this->structures->add($structure);
+            $structure->addPermission($this);
+        }
+
+        return $this;
+    }
+
+    public function removeStructure(Structure $structure): self
+    {
+        if ($this->structures->removeElement($structure)) {
+            $structure->removePermission($this);
         }
 
         return $this;

@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\StructureRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -37,6 +39,14 @@ class Structure implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: 'boolean')]
     private $isVerified = false;
+
+    #[ORM\ManyToMany(targetEntity: service::class, inversedBy: 'structures')]
+    private Collection $permission;
+
+    public function __construct()
+    {
+        $this->permission = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -140,6 +150,30 @@ class Structure implements UserInterface, PasswordAuthenticatedUserInterface
     public function setIsVerified(bool $isVerified): self
     {
         $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, service>
+     */
+    public function getPermission(): Collection
+    {
+        return $this->permission;
+    }
+
+    public function addPermission(service $permission): self
+    {
+        if (!$this->permission->contains($permission)) {
+            $this->permission->add($permission);
+        }
+
+        return $this;
+    }
+
+    public function removePermission(service $permission): self
+    {
+        $this->permission->removeElement($permission);
 
         return $this;
     }

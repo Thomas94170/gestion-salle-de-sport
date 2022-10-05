@@ -24,18 +24,17 @@ use Doctrine\Common\Collections\ArrayCollection;
 class FranchiseController extends AbstractController
 {
     #[Route('/franchise/{name}', name: 'franchise')]
-    public function show(Request $request, ManagerRegistry $doctrine, $name, User $user, EntityManagerInterface $entityManager): Response
+    public function show(Request $request, ManagerRegistry $doctrine, $name ,User $user, EntityManagerInterface $entityManager): Response
     {
         $fitness = $doctrine->getRepository(User::class)->findOneBy(array('name' => $name));
         /** @var User $getUser */
         $getUser = $this->getUser();
         $structure = $user->getStructures();
-        $structurePermission = $user;
         $service = $entityManager->getRepository(Service::class)->findAll();
 
 
-        //dd($test);
-       // dd(  $user->getStructures());
+
+
         //formulaire activation desactivation totale d'une franchise
 
         $activation_form = $this->createFormBuilder()
@@ -70,10 +69,6 @@ class FranchiseController extends AbstractController
 
             $mail = new MailPermSalle();
             $mail->send($fitness->getEmail(),'','Modification des permissions liées à votre contrat','');
-              //  dd($structurePermission->getStructures()->getOwner()->getStructures());
-           // dd($structure->getStructures());
-            $mailModifPermSalle = new MailModifPermSalle();
-            $mailModifPermSalle->send($structurePermission->getEmail(),'','Modification des permissions accordées à votre salle','');
 
 
             //mes services sont ajoutés à mes structure
@@ -92,14 +87,22 @@ class FranchiseController extends AbstractController
 
 
 
+
+
         return $this->render('franchise/index.html.twig', [
             'form' => $form->createView(),
             'structure' => $structure,
             'fitness' => $fitness,
             'user' => $getUser,
-            'activation_form'=>$activation_form->createView()
+            'activation_form'=>$activation_form->createView(),
+
+
+
+           //
         ]);
     }
+
+
 
 }
 

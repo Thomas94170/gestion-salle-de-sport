@@ -67,7 +67,27 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         return $qb->getQuery()->getResult();
     }
 
+    //gestion des pages salles pour afficher la bonne page correspondante
 
+    public function findUser($value)
+    {
+        return $this->createQueryBuilder('s')
+            ->select('s.id')
+            ->andWhere('s.name = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findPermissions($value)
+    {
+        return $this->createQueryBuilder('p')
+            ->innerJoin('p.permission', 'i')
+            ->andWhere('i.id = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getResult();
+    }
 
 
 
