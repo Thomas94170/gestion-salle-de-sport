@@ -18,7 +18,7 @@
                     <br>
                     <p class="card-text">{{ structure.address}}</p>
                     <br>
-                    <p class="card-text">{{ structure.email}}</p>
+                   {#  <p class="card-text">{{ structure.email}}</p>#}
                 </div>
 
             </div>
@@ -32,7 +32,6 @@
                           {#   <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">#}
                                 <table class="min-w-full divide-y divide-gray-300">
                                     <thead class="bg-gray-50">
-
                                     <tr>
                                         <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">Services proposés</th>
                                         <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"></th>
@@ -50,6 +49,7 @@
                                     {% else %}
                                         {% for service in service %}
                                             <tr>
+                                            {% if service.isActive %}
                                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ service.name }}</td>
                                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                                                     <p class="text-lime-400 italic">Validé</p>
@@ -57,10 +57,22 @@
                                                 <div class="form-check form-switch">
                                                     <label class="form-check-label" for="flexSwitchCheckChecked"></label>
                                                 </div>
-                                                {#   <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><a href="{{ path('salle' ,{'id' : structure.id}) }}">Détails</a></td>#}
+
+                                            {% else %}
+                                                  {#<td class="whitespace-nowrap px-3 py-4 text-sm text-red-600">Aucun service proposé</td> #}
+                                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                                        <p class="text-lime-400 italic"></p>
+                                                    </td>
+                                                    <div class="form-check form-switch">
+                                                        <label class="form-check-label" for="flexSwitchCheckChecked"></label>
+                                                    </div>
+                                            {% endif %}
+                                                    {#   <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><a href="{{ path('salle' ,{'id' : structure.id}) }}">Détails</a></td>#}
+
                                             </tr>
                                         {% endfor %}
                                     {% endif %}
+
                                     </tbody>
                                 </table>
                            {#  </div>#}

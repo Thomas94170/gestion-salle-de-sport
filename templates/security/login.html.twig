@@ -13,11 +13,13 @@
             You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('deconnexion') }}">Logout</a>
         </div>
     {% endif %}
-
-    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-    <label for="inputEmail">Email</label>
+    <br><br>
+    <h1 class="h3 mb-3 font-weight-normal ml-5">Please sign in</h1>
+    <br>
+    <label class="ml-5" for="inputEmail">Email</label>
     <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
-    <label for="inputPassword">Password</label>
+    <br>
+    <label class="ml-5" for="inputPassword">Password</label>
     <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
 
     <input type="hidden" name="_csrf_token"
@@ -34,9 +36,10 @@
             </label>
         </div>
     #}
-
-    <button class="btn btn-lg btn-primary" type="submit">
+    <br><br><br>
+    <button class="rounded-md p-2  bg-blue-400 hover:bg-sky-700 ml-5 text-white" type="submit">
         Sign in
     </button>
 </form>
+    <br><br><br><br><br><br><br><br>
 {% endblock %}

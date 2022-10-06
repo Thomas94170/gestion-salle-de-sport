@@ -21,7 +21,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class SalleController extends AbstractController
 {
-///salle/{name}/{id}
+
 
     #[Route('/salle/{id}', name: 'salle')]
     public function index($id, ManagerRegistry $managerRegistry, Request $request, EntityManagerInterface $entityManager): Response
@@ -36,50 +36,6 @@ class SalleController extends AbstractController
         $serviceAll =  $managerRegistry->getRepository(Service::class)->findAll();
 
         $service = $structure->getProprietaire()->getPermission($serviceAll);
-       // dd($structure);
-        //formulaire permission
-
-     ////////////       ->add('permok', SubmitType::class)
-     //////       ->add('permission', EntityType::class, [
-     //////           'class' => Service::class,
-     //////           'choices'=>$fitness->getPermission(),
-     //////           'multiple' => true,
-     //////           'expanded' => true,
-     //////           'data' => $structure->getPermission()
-     //////       ])->getForm();
-
-     //////   $form->handleRequest($request);
-     //////   if ($form->isSubmitted() && $form->isValid()) {
-
-            //envoi mail
-    ////    $mail = new MailPermSalle();
-    ////    $mail->send($fitness->getEmail(),'','Modification des permissions liées à votre contrat','');
-
-    ////          $mailModifPermSalle = new MailModifPermSalle();
-    ////          $mailModifPermSalle->send($structure->getEmail(),'','Modification des permissions accordées à votre salle','');
-    ////    }
-
-        //mes services sont ajoutés à mes structure
-    //    foreach ($form->getData()['permission'] as $serviceId) {
-    //        $service = $entityManager->getRepository(Service::class)->find($serviceId);
-    //        $fitness->addPermission($service);
-    //    };
-    //    $entityManager->persist($fitness);
-     //   $entityManager->flush();
-
-    //    if ($this->getUser()->getRoles() == ['ROLE_ADMIN']) {
-    //        $id = $managerRegistry->getRepository(User::class)->findUser($name);
-    //        $user = $managerRegistry->getRepository(User::class)->findPermissions($id);
-    //        if (isset($user[0])) {
-    //            $permission = $user[0]->getPermission();
-
-    //        } else {
-    //            $permission = '';
-    //        }
-    //    } else {
-     //       $permission = $this->getUser()->getPermission();
-     //   }
-
 
 
             $user = $this->getUser();
@@ -87,7 +43,7 @@ class SalleController extends AbstractController
             if ($this->getUser()->getRoles() == ['ROLE_ADMIN']) {
                 $options = (new \App\Entity\User)->getOption();
             } else {
-                $options = $this->getUser()->getOption();
+                $options = $this->getUser()->getPermission();
             }
 
             if (!$fitness) {
@@ -95,13 +51,11 @@ class SalleController extends AbstractController
             }
 
             return $this->render('salle/index.html.twig', [
-               // 'form' => $form->createView(),
                 'structure' => $structure,
                 'option' => $options,
                  'user' => $user,
                 'service'=>$service,
                 'fitness'=>$fitness,
-             //   'permission'=>$permission
 
 
             ]);

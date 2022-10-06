@@ -48,25 +48,14 @@
                                 <img class="hidden h-8 w-auto lg:block" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500" alt="Your Company">
                             </div>
                             <div class="hidden sm:ml-6 sm:block">
-                                <div class="flex space-x-4">
-                                    <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-                                    {% if app.user  %}
-                                    <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium" >Dashboard</a>
-
-                                    <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Team</a>
-
-                                    <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Projects</a>
-
-                                    <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Calendar</a>
-                                    {% endif %}
-                                </div>
+                               <p class="text-center text-white italic font-extrabold ">Admin Fitness Outil de gestion des professionnels du fitness</p>
                             </div>
                         </div>
                         <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 text-white">
                            {#  {% if app.user  %}#}
                             {% if app.user %}
-
-                                <a href="{{path('mon-compte')}}" class="text-red-600 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Mon Compte</a> | <a href="{{path('deconnexion')}}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Deconnexion</a>
+                            {#  <a href="{{path('mon-compte')}}" class="text-red-600 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Mon Compte</a> | #}
+                                <a href="{{path('deconnexion')}}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Deconnexion</a>
                             {% else %}
                                 <a href="{{path('connexion')}}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Connexion</a>
                             {% endif %}

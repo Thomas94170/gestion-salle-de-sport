@@ -40,7 +40,7 @@ class Structure implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'boolean')]
     private $isVerified = false;
 
-    #[ORM\ManyToMany(targetEntity: service::class, inversedBy: 'structures')]
+    #[ORM\ManyToMany(targetEntity: Service::class, inversedBy: 'structures')]
     private Collection $permission;
 
     public function __construct()
@@ -176,5 +176,10 @@ class Structure implements UserInterface, PasswordAuthenticatedUserInterface
         $this->permission->removeElement($permission);
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->getUserIdentifier();
     }
 }

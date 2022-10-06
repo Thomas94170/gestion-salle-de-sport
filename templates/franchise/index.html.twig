@@ -106,6 +106,12 @@
     </div>
     <br>
     <br>
+    {% if user.roles is same as ['ROLE_ADMIN'] %}
+    {% if fitness.isActive %}
+    <div class="text-center">Avant toute désactivation de contrat, veuillez supprimer les services proposés qui sont activés </div>
+    {% endif %}
+    {% endif %}
+    <br>
     <br>
 
     {% if user.roles is same as ['ROLE_ADMIN']   %}
