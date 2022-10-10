@@ -50,6 +50,9 @@ class FranchiseController extends AbstractController
 
             $entityManager->persist($fitness);
             $entityManager->flush();
+
+            //sert à afficher les infos sans a devoir recharger la page pour voir les permissions actives
+            return $this->redirect($request->getUri());
         }
         //form des permissions
 
