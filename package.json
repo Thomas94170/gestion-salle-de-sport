@@ -19,6 +19,7 @@
         "build": "encore production --progress"
     },
     "dependencies": {
+        "@tailwindcss/forms": "^0.5.3",
         "acorn": "^8.8.0",
         "autoprefixer": "^10.4.8",
         "postcss": "^8.4.16",

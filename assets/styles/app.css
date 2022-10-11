@@ -4,5 +4,14 @@
 
 
 body {
-    background-color: lightgray;
+    background-color: white;
+}
+
+*{
+    box-sizing: border-box;
+}
+
+html{
+    height: 100%;
+    width: 100%;
 }
