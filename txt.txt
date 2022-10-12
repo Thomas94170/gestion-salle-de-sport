@@ -5,3 +5,7 @@ CLEARDB_DATABASE_URL
 /public/build/
 
 mysql://d2h16rtc3ehfdnsu:b5urba0ia49lt799@ltnya0pnki2ck9w8.chr7pe7iynqr.eu-west-1.rds.amazonaws.com:3306/ashavif556tk0xy4         $ git rm fil.lock
+
+  "engines": {
+        "node": "v16.17.0",
+        "npm": "8.19.1"
