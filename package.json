@@ -8,6 +8,7 @@
         "regenerator-runtime": "^0.13.9",
         "sass": "^1.54.8",
         "sass-loader": "13.0.0",
+        "tailwindcss": "^3.1.8",
         "webpack-notifier": "^1.15.0"
     },
     "license": "UNLICENSED",
@@ -18,13 +19,11 @@
         "watch": "encore dev --watch",
         "build": "encore production --progress"
     },
-
     "dependencies": {
         "@tailwindcss/forms": "^0.5.3",
         "acorn": "^8.8.0",
         "autoprefixer": "^10.4.8",
         "postcss": "^8.4.16",
-        "tailwindcss": "^3.1.8",
         "yarn": "^1.22.19"
     }
 }
