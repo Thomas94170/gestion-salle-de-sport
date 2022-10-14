@@ -18,5 +18,5 @@ html{
 
 .home{
     background-size: cover;
-    background: url("assets/img/home.jpg") no-repeat top;
+    background: url("../img/home.jpg") no-repeat top;
 }
