@@ -16,9 +16,3 @@ html{
     width: 100%;
 }
 
-.home{
-    background-image:url("/public/uploads/home.jpg");
-    background-size: cover;
-    background-position: top;
-    background-repeat: no-repeat;
-}
