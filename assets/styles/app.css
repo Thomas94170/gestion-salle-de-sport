@@ -16,3 +16,7 @@ html{
     width: 100%;
 }
 
+.home{
+    background-size: cover;
+    background: url("assets/img/home.jpg") no-repeat top;
+}
