@@ -17,8 +17,6 @@ html{
 }
 
 .home{
-    background-image: url("/public/build/images/home.36afd98a.jpg");
     background-size: cover;
-    background-position: top;
-    background-repeat: no-repeat;
+    background: url("/public/uploads/home.jpg") no-repeat top;
 }
