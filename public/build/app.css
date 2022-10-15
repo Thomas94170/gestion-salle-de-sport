@@ -8,6 +8,16 @@
 2. Allow adding a border to an element by just adding a border-width. (https://github.com/tailwindcss/tailwindcss/pull/116)
 */
 
+@font-face {
+font-family: 'Changa';
+  src: url("assets/font/Changa-VariableFont_wght.ttf") format('woff2');
+}
+
+body{
+  font-family: "Changa", serif;
+}
+
+
 *,
 ::before,
 ::after {
