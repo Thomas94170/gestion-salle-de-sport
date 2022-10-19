@@ -42,7 +42,7 @@ html {
   -moz-tab-size: 4; /* 3 */
   -o-tab-size: 4;
      tab-size: 4; /* 3 */
-  font-family: "Changa", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,  Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Changa", "Changa", "Noto Color Emoji"; /* 4 */
+  font-family: "Changa", serif;
 }
 
 /*
