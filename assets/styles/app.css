@@ -11,6 +11,11 @@ body {
     box-sizing: border-box;
 }
 
+@font-face {
+    font-family: "Changa";
+    src: url("./font/Changa.ttf");
+}
+
 html{
     height: 100%;
     width: 100%;
