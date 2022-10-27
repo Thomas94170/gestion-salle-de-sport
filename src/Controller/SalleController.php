@@ -31,7 +31,7 @@ class SalleController extends AbstractController
 
         $structure = $managerRegistry->getRepository(Structure::class)->findOneBy(array('id' => $id));
 
-       // $serviceSalle =  $managerRegistry->getRepository(Service::class)->findAll();
+
 
         $serviceAll =  $managerRegistry->getRepository(Service::class)->findAll();
 

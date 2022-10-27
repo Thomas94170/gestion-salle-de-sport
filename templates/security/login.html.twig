@@ -20,20 +20,33 @@
     <br><br>
     <h1 class="h3 mb-3 font-weight-normal ml-5">Please sign in</h1>
     <br>
-    <label class="ml-5" for="inputEmail">Email</label>
-    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
-    <br>
-    <label class="ml-5" for="inputPassword">Password</label>
-    <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+        <div class="flex justify-center">
+            <div>
+                <label class="ml-5" for="inputEmail">Email</label>
+                <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
+            </div>
+        </div>
+            <br>
+        <div class="flex justify-center">
+            <div>
+                <label class="ml-5" for="inputPassword">Password</label>
+                <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
 
-    <input type="hidden" name="_csrf_token"
-           value="{{ csrf_token('authenticate') }}"
-    >
+                <input type="hidden" name="_csrf_token"
+                       value="{{ csrf_token('authenticate') }}"
+                >
+            </div>
+        </div>
+
 
     <br><br><br>
-    <button class="rounded-md p-2  bg-blue-400 hover:bg-sky-700 ml-5 text-white" type="submit">
-        Sign in
-    </button>
+        <div class="flex justify-center">
+            <div>
+                <button class="rounded-md p-2  bg-blue-400 hover:bg-sky-700 ml-5 text-white" type="submit">
+                         Sign in
+                </button>
+            </div>
+        </div>
     </div>
 </form>
 

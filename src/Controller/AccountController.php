@@ -23,17 +23,7 @@ class AccountController extends AbstractController
 
 
 
-        //    $franchise = $doctrine->getRepository(User::class)->findOneBy(array('name'=>$name));
-      //  $getUser = $this->getUser();
-      //  $structure =$user->getStructures();
-      //  $service = $doctrine->getRepository(Service::class)->findOneBy(array('name'=>$name));
 
-
-      //  return $this->render('account/index.html.twig',[
-      //      'user'=>$getUser,
-      //      'structure'=>$structure,
-      //      'franchise'=>$franchise,
-      //      'service'=>$service
 
 
         ]);
