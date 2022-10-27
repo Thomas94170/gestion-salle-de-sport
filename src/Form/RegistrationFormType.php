@@ -56,7 +56,11 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('submit',SubmitType::class
+            ->add('submit',SubmitType::class,[
+                'attr'=>[
+                    'class'=>'rounded-md p-2  bg-blue-400 hover:bg-sky-700 ml-5 text-white'
+                ]
+                ]
                 )
         ;
     }
