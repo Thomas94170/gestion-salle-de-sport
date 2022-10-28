@@ -1,0 +1,130 @@
+
+
+-- Listage de la structure de la table ecf. service
+CREATE TABLE IF NOT EXISTS `service` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `is_active` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Listage des donnÃ©es de la table ecf.service : ~6 rows (environ)
+/*!40000 ALTER TABLE `service` DISABLE KEYS */;
+INSERT INTO `service` (`id`, `name`, `is_active`) VALUES
+	(1, 'vente de boissons', 1),
+	(2, 'gestion planning', 1),
+	(3, 'promotion abonnement', 1),
+	(4, 'cours collectif', 1),
+	(5, 'coaching individuel', 1),
+	(6, 'vente de pot de protÃ©ines', 0);
+/*!40000 ALTER TABLE `service` ENABLE KEYS */;
+
+-- Listage de la structure de la table ecf. squad_admin
+CREATE TABLE IF NOT EXISTS `squad_admin` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `email` varchar(180) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `roles` json NOT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UNIQ_7FB465B8E7927C74` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Listage des donnÃ©es de la table ecf.squad_admin : ~1 rows (environ)
+/*!40000 ALTER TABLE `squad_admin` DISABLE KEYS */;
+INSERT INTO `squad_admin` (`id`, `email`, `roles`, `password`, `name`) VALUES
+	(1, 'AdminFitness@gmail.com', '[]', '$2y$13$juqoKUczPlfoX0YS/TT0Hu5r/8MYxgo1eSgXE6tUVdMHXv5DhzYJC', 'Admin');
+/*!40000 ALTER TABLE `squad_admin` ENABLE KEYS */;
+
+-- Listage de la structure de la table ecf. structure
+CREATE TABLE IF NOT EXISTS `structure` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `proprietaire_id` int(11) NOT NULL,
+  `email` varchar(180) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `roles` json NOT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `address` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `is_verified` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UNIQ_6F0137EAE7927C74` (`email`),
+  KEY `IDX_6F0137EA76C50E4A` (`proprietaire_id`),
+  CONSTRAINT `FK_6F0137EA76C50E4A` FOREIGN KEY (`proprietaire_id`) REFERENCES `user` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Listage des donnÃ©es de la table ecf.structure : ~6 rows (environ)
+/*!40000 ALTER TABLE `structure` DISABLE KEYS */;
+INSERT INTO `structure` (`id`, `proprietaire_id`, `email`, `roles`, `password`, `address`, `is_verified`) VALUES
+	(4, 4, 'sportChatelet@gmail.com', '[]', '$2y$13$FmVLflNX8ANdrAf1Sy2Rv.ogkDtxjkdt7T.hUzFzcouxdryOfkdQW', 'WestFields Chatelet les halles, 75001 Paris', 0),
+	(5, 4, 'sportLaDefense@gmail.com', '[]', '$2y$13$gvEjIAhJbJ86CxW/W5lUOuMU0CevbIr.o3xFcNlbwS5ROQ5ecJGBm', 'WestFields  les 4 temps, 92100  Courbevoie', 0),
+	(8, 4, 'sportRosny2@gmail.com', '[]', '$2y$10$0IhZ.70zZMdDERjfkh3vUOYI0iZsTGKvxSRjfQldTKe06sLh8TFVi', 'ccal rosny 2 av GÃ©nÃ©ral de Gaulle, 93110 Rosny sous bois', 0),
+	(9, 4, 'sportSenart2@gmail.com', '[]', '$2y$10$0IhZ.70zZMdDERjfkh3vUOYI0iZsTGKvxSRjfQldTKe06sLh8TFVi', '3 all PrÃ©ambule, 77127 Lieusaint', 0),
+	(10, 5, 'fitpark-porte-de-vincennes@gmail.com', '[]', '$2y$13$cwxhySfKRgJjVk9Gg9bXd.l0U2jDtdpFtT85uhHQdr/0vKNz0I4Ki', '9 av de la Moriciere 75012 Paris', 0),
+	(30, 24, 'thomas.devweb94@gmail.com', '[]', '$2y$13$mmApR2OkOARnN17BhGSIb.6OoqD2eB.V5QDMy.H8TwPvlOZSouiAS', '4 avenue du doct Faugeroux 94170 Le Perreux sur Marne', 1);
+/*!40000 ALTER TABLE `structure` ENABLE KEYS */;
+
+-- Listage de la structure de la table ecf. structure_service
+CREATE TABLE IF NOT EXISTS `structure_service` (
+  `structure_id` int(11) NOT NULL,
+  `service_id` int(11) NOT NULL,
+  PRIMARY KEY (`structure_id`,`service_id`),
+  KEY `IDX_3A3FEAE32534008B` (`structure_id`),
+  KEY `IDX_3A3FEAE3ED5CA9E6` (`service_id`),
+  CONSTRAINT `FK_3A3FEAE32534008B` FOREIGN KEY (`structure_id`) REFERENCES `structure` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `FK_3A3FEAE3ED5CA9E6` FOREIGN KEY (`service_id`) REFERENCES `service` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Listage des donnÃ©es de la table ecf.structure_service : ~0 rows (environ)
+/*!40000 ALTER TABLE `structure_service` DISABLE KEYS */;
+/*!40000 ALTER TABLE `structure_service` ENABLE KEYS */;
+
+-- Listage de la structure de la table ecf. user
+CREATE TABLE IF NOT EXISTS `user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `email` varchar(180) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `roles` json NOT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `is_verified` tinyint(1) NOT NULL,
+  `is_active` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UNIQ_8D93D649E7927C74` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Listage des donnÃ©es de la table ecf.user : ~4 rows (environ)
+/*!40000 ALTER TABLE `user` DISABLE KEYS */;
+INSERT INTO `user` (`id`, `email`, `roles`, `password`, `name`, `is_verified`, `is_active`) VALUES
+	(4, 'fitSquare@gmail.com', '[]', '$2y$13$6GszsjHs/zM36fDFX2rdU.GAZTwDowjDZhfeGOJyM.oSlLvcIAGeO', 'Fitness Square', 1, 1),
+	(5, 'fitpark@gmail.com', '[]', '$2y$13$NgqCsVmLukjw39aGTZ1.Yem/vhWQze6fA5MhQem1g1rlScjevzzjy', 'FitPark', 0, 1),
+	(6, 'crosspark@gmail.com', '[]', '$2y$13$A6hqbfZIm5UJNbNTn1yIk.u5/29tvmz6dLS2ST/w/AnbmvJQATPg2', 'CrossPark', 0, 0),
+	(24, 'thirionthomas68100@gmail.com', '[]', '$2y$13$yCPxNEdIbtv91mLupqV8cujNR4wfAEHuCxIrOmmcn7nDqST6pTl5u', 'Home Fitness', 1, 1);
+/*!40000 ALTER TABLE `user` ENABLE KEYS */;
+
+-- Listage de la structure de la table ecf. user_service
+CREATE TABLE IF NOT EXISTS `user_service` (
+  `user_id` int(11) NOT NULL,
+  `service_id` int(11) NOT NULL,
+  PRIMARY KEY (`user_id`,`service_id`),
+  KEY `IDX_B99084D8A76ED395` (`user_id`),
+  KEY `IDX_B99084D8ED5CA9E6` (`service_id`),
+  CONSTRAINT `FK_B99084D8A76ED395` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `FK_B99084D8ED5CA9E6` FOREIGN KEY (`service_id`) REFERENCES `service` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Listage des donnÃ©es de la table ecf.user_service : ~9 rows (environ)
+/*!40000 ALTER TABLE `user_service` DISABLE KEYS */;
+INSERT INTO `user_service` (`user_id`, `service_id`) VALUES
+	(4, 1),
+	(4, 2),
+	(4, 3),
+	(4, 4),
+	(6, 1),
+	(6, 2),
+	(24, 1),
+	(24, 2),
+	(24, 3);
+/*!40000 ALTER TABLE `user_service` ENABLE KEYS */;
+
+/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
+/*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40111 SET SQL_NOTES=IFNULL(@OLD_SQL_NOTES, 1) */;
