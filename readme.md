@@ -9,3 +9,16 @@ Guide d'utilisation
 Espace Admin, connexion avec votre mail et mdp
 
 dans l'espace administration vous pouvez ajouter un nouveau franchiseur ou une nouvelle salle qui sera liée à son franchiseur. en cliquant sur Détails, vous arrivez sur l'onglet Franchise, permettant la gestion des permissions données. Pour toutes désactivations de contrat, veillez à bien supprimer préalablement toutes les autorisations accordées.
+
+
+Guide de deploiement en local
+Si vous voulez prendre mon projet, veuillez effectuer les instructions suivantes
+    git clone https://github.com/Thomas94170/gestion-salle-de-sport.git
+    composer install
+    Changer la variable APP_ENV de prod à dev dans le fichier .env
+    composer require symfony/runtime
+    yarn install
+    symfony console doctrine:migrations:migrate
+    symfony serve
+    yarn watch
+    Enjoy !
